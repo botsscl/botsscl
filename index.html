@@ -1,0 +1,2122 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <title>BotSSCL</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="Bootstrap 4 Template For Software Startups">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <link rel="shortcut icon" href="favicon.ico"> 
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome JS-->
+    <script defer src="assets/fontawesome/js/all.min.js"></script>
+    
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.2/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="assets/plugins/simplelightbox/simple-lightbox.min.css">
+
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/theme.css">
+
+	<style>
+		* {
+		  box-sizing: border-box;
+		}
+		
+		.column {
+		  float: left;
+		  width: 25.0%;
+		  padding: 5px;
+		}
+		
+		/* Clearfix (clear floats) */
+		.row::after {
+		  content: "";
+		  clear: both;
+		  display: table;
+		}
+		</style>
+
+</head> 
+<!-- Companion Appendix for our Entitled Paper -->
+<body class="docs-page">    
+    <header class="header fixed-top">	    
+        <div class="branding docs-branding">
+            <div class="container-fluid position-relative py-2">
+                <div class="docs-logo-wrapper">
+					<button id="docs-sidebar-toggler" class="docs-sidebar-toggler docs-sidebar-visible me-2 d-xl-none" type="button">
+	                    <span></span>
+	                    <span></span>
+	                    <span></span>
+	                </button>
+	                <div class="site-logo"><a class="navbar-brand" href="https://botsscl.github.io/"><span class="logo-text">BotSSCL: Social Bot Detection with Self-Supervised Contrastive Learning
+						<span class="text-alt"></span></span></a></div>    
+                </div><!--//docs-logo-wrapper-->
+	            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+	                <!-- <div class="top-search-box d-none d-lg-flex">
+		                <form class="search-form">
+				            <input type="text" placeholder="Search the docs..." name="search" class="form-control search-input">
+				            <button type="submit" class="btn search-btn" value="Search"><i class="fas fa-search"></i></button>
+				        </form>
+	                </div> -->
+	
+					<!-- <ul class="social-list list-inline mx-md-3 mx-lg-5 mb-0 d-none d-lg-flex">
+						<li class="list-inline-item"><a href="#"><i class="fab fa-github fa-fw"></i></a></li>
+			            <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
+		                <li class="list-inline-item"><a href="#"><i class="fab fa-slack fa-fw"></i></a></li>
+		                <li class="list-inline-item"><a href="#"><i class="fab fa-product-hunt fa-fw"></i></a></li> -->
+		            <!-- </ul>//social-list -->
+		            <a href="https://github.com/botsscl/botsscl.github.io" class="btn btn-primary d-none d-lg-flex">Github</a>
+	            </div><!--//docs-top-utilities-->
+            </div><!--//container-->
+        </div><!--//branding-->
+    </header><!--//header-->
+    
+    
+    <div class="docs-wrapper">
+	    <div id="docs-sidebar" class="docs-sidebar">
+		    <div class="top-search-box d-lg-none p-3">
+                <form class="search-form">
+		            <input type="text" placeholder="Search the docs..." name="search" class="form-control search-input">
+		            <button type="submit" class="btn search-btn" value="Search"><i class="fas fa-search"></i></button>
+		        </form>
+            </div>
+			<!-- characterization , bot_feature, osn_landscape, trigger_bots -->
+		    <nav id="docs-nav" class="docs-nav navbar">
+			    <ul class="section-items list-unstyled nav flex-column pb-3">
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#abstract"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Abstract</a></li>
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#botsscl"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>BotSSCL Framework</a></li>
+					
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#visualization"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>t-SNE Visualization</a></li>
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#features_used"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Features Used</a></li>
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#evaluation"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Evaluation Metrics</a></li>
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#experimental_setup"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Experimental Setup</a></li>
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#results"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Experiment Results</a></li>
+					<!-- <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#ablations"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Ablations</a></li> -->
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#ablations"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Ablations</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#batch_size">Impact of Batch Size</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#epochs">Impact of Epochs</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#loss_function">Impact of Loss Function</a></li>
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#features_manipulation"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Features selected for Attack</a></li> 
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#adversarial_perturbations"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Adversarial Perturbations</a></li>
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#attack"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Attack using GenAI</a></li>
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#augmentations"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Augmentation Settings</a></li>
+					<!-- <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#references"><span class="theme-icon-holder me-2"><i class="fas fa-tools"></i></span>References</a></li> -->
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#author_info"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Author Information</a></li>
+					<!-- <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#figures"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Figures</a></li> -->
+					<!-- <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#visualization"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>t-SNE Visualization</a></li> -->
+					
+
+				    <!-- <li class="nav-item"><a class="nav-link scrollto" href="#search-terms">Search Terms</a></li> -->
+				    <!-- <li class="nav-item"><a class="nav-link scrollto" href="#item-1-2">Section Item 1.2</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-1-3">Section Item 1.3</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-1-4">Section Item 1.4</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-1-5">Section Item 1.5</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-1-6">Section Item 1.6</a></li> -->
+				    <!-- <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#readability_metrics"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Readability Metrics</a></li> -->
+				    <!-- <li class="nav-item"><a class="nav-link scrollto" href="#item-2-1">Search Query Terms</a></li>  -->
+				    <!-- <li class="nav-item"><a class="nav-link scrollto" href="#item-2-2">Section Item 2.2</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-2-3">Section Item 2.3</a></li> -->
+				    <!-- <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#bots_on_twitter"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>Bots on Twitter</a></li>
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#osn_landscape"><span class="theme-icon-holder me-2"><i class="fas fa-tools"></i></span>OSN Landscape</a></li>
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#information_diffusion"><span class="theme-icon-holder me-2"><i class="fas fa-tools"></i></span>False/Real Info. Diffusion</a></li>
+					<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#characterization"><span class="theme-icon-holder me-2"><i class="fas fa-box"></i></span>False information</a></li> -->
+				    <!-- <li class="nav-item"><a class="nav-link scrollto" href="#item-3-1">Section Item 3.1</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-3-2">Section Item 3.2</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-3-3">Section Item 3.3</a></li> -->
+				    <!-- <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#bot_feature"><span class="theme-icon-holder me-2"><i class="fas fa-cogs"></i></span>Bot Feature Overview</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#bot_feature_1">User Feature</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#bot_feature_2">Network Feature</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#bot_feature_3">Content and Language</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#trigger_bots"><span class="theme-icon-holder me-2"><i class="fas fa-tools"></i></span>Case Study (Trigger Bots)</a></li> -->
+					<!-- <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#feature_manipulation"><span class="theme-icon-holder me-2"><i class="fas fa-tools"></i></span>Feature Manipulation</a></li> -->
+					<!-- <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#references"><span class="theme-icon-holder me-2"><i class="fas fa-tools"></i></span>References</a></li> -->
+				    <!-- <li class="nav-item"><a class="nav-link scrollto" href="#item-5-1">Section Item 5.1</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-5-2">Section Item 5.2</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-5-3">Section Item 5.3</a></li> -->
+				    <!-- <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-6"><span class="theme-icon-holder me-2"><i class="fas fa-laptop-code"></i></span>Web</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-1">Section Item 6.1</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-2">Section Item 6.2</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-3">Section Item 6.3</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-7"><span class="theme-icon-holder me-2"><i class="fas fa-tablet-alt"></i></span>Mobile</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-7-1">Section Item 7.1</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-7-2">Section Item 7.2</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-7-3">Section Item 7.3</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-8"><span class="theme-icon-holder me-2"><i class="fas fa-book-reader"></i></span>Resources</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-8-1">Section Item 8.1</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-8-2">Section Item 8.2</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-8-3">Section Item 8.3</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-9"><span class="theme-icon-holder me-2"><i class="fas fa-lightbulb"></i></span>FAQs</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-9-1">Section Item 9.1</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-9-2">Section Item 9.2</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-9-3">Section Item 9.3</a></li> -->
+			    </ul>
+				<!-- SoK: False Information, Bots and Malicious Campaigns: Demystifying Elements of Social Media Manipulations -->
+		    </nav><!--//docs-nav-->
+	    </div><!--//docs-sidebar-->
+	    <div class="docs-content">
+		    <div class="container">
+
+				<article class="docs-article" id="abstract">
+					<section class="docs-section">
+					<header class="docs-header">
+						<h1 class="docs-heading">Abstract</h1>
+						<!-- <section class="docs-intro"> -->
+							<!-- <p>From Figure~\ref{fig:problem}, we can see the last three datasets have separability problems for the classifier due to low homogeneity within clusters or similar features for both classes (bot and human). The most intuitive way to inspect the different datasets is to visualize them in feature space. We take this result of inspecting different datasets from [7], where the authors projected each dataset into 2-D plane for visualization. To quantify the separation of bots and human accounts in each dataset, the authors applied kNN classifier in the original feature space. With the labels obtained from kNN and the ground truth, they could calculate the homogeneity score for each dataset. From Figure~\ref{fig:problem}, five of 11 datasets demonstrate a clearly clustered structure, suggesting bots and humans are easily separable using feature-based. The rest of the datasets have clusters that are not as easily separable. The same figure shows that accounts in the Gilani dataset had lower homogeneity scores than accounts in the Varol dataset, which refers to the KNN cluster homogeneity score achieved in ~\cite{Yang_Varol_Hui_Menczer_2020}.</p> -->
+							<p>The detection of automated accounts, also known as “social bots”,
+								has been an increasingly important concern for online social networks (OSNs). While several methods have been proposed for detecting social bots, significant research gaps remain. First, current
+								models exhibit limitations in detecting sophisticated bots that aim
+								to mimic genuine OSN users. Second, these methods often rely on
+								simplistic profile features, which are susceptible to manipulation. In
+								addition to their vulnerability to adversarial manipulations, these
+								models lack generalizability, resulting in subpar performance when
+								trained on one dataset and tested on another.
+								<br><br>
+								To address these challenges, we propose a novel framework for
+								social Bot detection with Self-Supervised Contrastive Learning
+								(BotSSCL). Our framework leverages contrastive learning to distinguish between social bots and humans in the embedding space to
+								improve linear separability. The high-level representations derived
+								by BotSSCL enhance its resilience to variations in data distribution and ensure generalizability. We evaluate BotSSCL’s robustness
+								against adversarial attempts to manipulate bot accounts to evade detection. Experiments on two datasets featuring sophisticated bots
+								demonstrate that BotSSCL outperforms other supervised, unsu-
+								pervised, and self-supervised baseline methods. We achieve ≈ 6%
+								and ≈ 8% higher (F1) performance than SOTA on both datasets.
+								In addition, BotSSCL also achieves 67% F1 when trained on one
+								dataset and tested with another, demonstrating its generalizability.
+								Lastly, BotSSCL increases adversarial complexity and only allows
+								4% success to the adversary in evading detection.</p>
+
+								<!-- <div class="column"> -->
+									<!-- <div style="text-align: center;">
+									<img style="width:90%" src="images/BotometerLite_Pic_100.png" alt="Snow">
+									<p style="text-align:center;">(a) Visualization of human and bot accounts in different training datasets, Figure Source: [59]. The last three datasets
+										(especially Varol and Gilani) show the minimum homogeneity and separability problems between the bot and human classes.</p>
+									</div>
+									</div>
+								<br><br> -->
+						</section><!--//docs-intro-->
+					</header>
+				</article><!--//docs-article-->
+
+				<article class="docs-article" id="botsscl">
+					<section class="docs-section">
+					<header class="docs-header">
+						<h1 class="docs-heading">BotSSCL Framework</h1>
+						<!-- <section class="docs-intro"> -->
+							<!-- <p>From Figure~\ref{fig:problem}, we can see the last three datasets have separability problems for the classifier due to low homogeneity within clusters or similar features for both classes (bot and human). The most intuitive way to inspect the different datasets is to visualize them in feature space. We take this result of inspecting different datasets from [7], where the authors projected each dataset into 2-D plane for visualization. To quantify the separation of bots and human accounts in each dataset, the authors applied kNN classifier in the original feature space. With the labels obtained from kNN and the ground truth, they could calculate the homogeneity score for each dataset. From Figure~\ref{fig:problem}, five of 11 datasets demonstrate a clearly clustered structure, suggesting bots and humans are easily separable using feature-based. The rest of the datasets have clusters that are not as easily separable. The same figure shows that accounts in the Gilani dataset had lower homogeneity scores than accounts in the Varol dataset, which refers to the KNN cluster homogeneity score achieved in ~\cite{Yang_Varol_Hui_Menczer_2020}.</p> -->
+							
+
+								<!-- <div class="column"> -->
+									<div style="text-align: center;">
+										<embed src="images/main_model_updated2 (1).pdf" width="800px" height="140px" />
+									<p style="text-align:center;">Overview of BotSSCL framework. The first and second block (from left to right) represents the feature engineering and
+										user representation process. The third block denotes contrastive learning. In the fourth block, we evaluate the representations.</p>
+									</div>
+									<!-- </div> -->
+								<!-- <br><br> -->
+						</section><!--//docs-intro-->
+					</header>
+				</article><!--//docs-article-->
+
+				<article class="docs-article" id="visualization">
+					<section class="docs-section">
+					<header class="docs-header">
+						<h1 class="docs-heading">Visualization of Social Bot Datasets</h1>
+						<!-- <section class="docs-intro"> -->
+							<!-- <p>From Figure~\ref{fig:problem}, we can see the last three datasets have separability problems for the classifier due to low homogeneity within clusters or similar features for both classes (bot and human). The most intuitive way to inspect the different datasets is to visualize them in feature space. We take this result of inspecting different datasets from [7], where the authors projected each dataset into 2-D plane for visualization. To quantify the separation of bots and human accounts in each dataset, the authors applied kNN classifier in the original feature space. With the labels obtained from kNN and the ground truth, they could calculate the homogeneity score for each dataset. From Figure~\ref{fig:problem}, five of 11 datasets demonstrate a clearly clustered structure, suggesting bots and humans are easily separable using feature-based. The rest of the datasets have clusters that are not as easily separable. The same figure shows that accounts in the Gilani dataset had lower homogeneity scores than accounts in the Varol dataset, which refers to the KNN cluster homogeneity score achieved in ~\cite{Yang_Varol_Hui_Menczer_2020}.</p> -->
+							<p>From Figure 3, we can see the last three datasets have separability
+								problems for the classifier due to low homogeneity within clusters
+								or similar features for both classes (bot and human). The most
+								intuitive way to inspect the different datasets is to visualize them
+								in feature space. We take this result of inspecting different datasets
+								from [7], where the authors projected each dataset into 2-D plane
+								for visualization. To quantify the separation of bots and human
+								accounts in each dataset, the authors applied kNN classifier in the
+								original feature space. With the labels obtained from kNN and the
+								ground truth, they could calculate the homogeneity score for each
+								dataset. From Figure 3, five of 11 datasets demonstrate a clearly
+								clustered structure, suggesting bots and humans are easily separable
+								using feature-based. The rest of the datasets have clusters that are
+								not as easily separable. The same figure shows that accounts in the
+								Gilani dataset had lower homogeneity scores than accounts in the
+								Varol dataset, which refers to the KNN cluster homogeneity score
+								achieved in [59].</p>
+
+								<!-- <div class="column"> -->
+									<div style="text-align: center;">
+									<img style="width:90%" src="images/BotometerLite_Pic_100.png" alt="Snow">
+									<p style="text-align:center;">(a) Visualization of human and bot accounts in different training datasets, Figure Source: [59]. The last three datasets
+										(especially Varol and Gilani) show the minimum homogeneity and separability problems between the bot and human classes.</p>
+									</div>
+									</div>
+								<!-- <br><br> -->
+						</section><!--//docs-intro-->
+					</header>
+				</article><!--//docs-article-->
+
+
+				<article class="docs-article" id="features_used">
+					<section class="docs-section">
+					<header class="docs-header">
+						<h1 class="docs-heading">Features Used in our work</h1>
+						<!-- <p>Table~\ref{tab:features_elaborated} shows the different features used in our work. The table particularly displays different feature category types and the data collection of tier level it falls into for feature engineering.</p> -->
+						<p>Table 9 shows the different features used in our work. The table
+							particularly displays different feature category types and the data
+							collection of tier level it falls into for feature engineering.</p>
+						<!-- <p>We identified bot percentage discovered in original dataset from multiple studies:</p> -->
+				<div class="table-responsive my-4">
+					<table class="table table-striped">
+						<thead>
+							<thead>
+								<tr>
+								  <th class="tg-0pky">Feature Type</th>
+								  <th class="tg-0pky">Feature No.</th>
+								  <th class="tg-0pky">Feature Name</th>
+								  <th class="tg-0pky">Data Collection Tier</th>
+								</tr>
+							  </thead>
+							  <tbody>
+								<tr>
+								  <td class="tg-0pky" rowspan="33"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>User Metadata<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></td>
+								  <td class="tg-0pky">1</td>
+								  <td class="tg-0pky">followers_count</td>
+								  <td class="tg-0pky" rowspan="33"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Tier 0<br></td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">2</td>
+								  <td class="tg-0pky">friends_count</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">3</td>
+								  <td class="tg-0pky">listed_count</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">4</td>
+								  <td class="tg-0pky">verified</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">5</td>
+								  <td class="tg-0pky">user_age</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">6</td>
+								  <td class="tg-0pky">follower_growth_rate</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">7</td>
+								  <td class="tg-0pky">friends_growth_rate</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">8</td>
+								  <td class="tg-0pky">listed_growth_rate</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">9</td>
+								  <td class="tg-0pky">followers_friend_ratio</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">10</td>
+								  <td class="tg-0pky">name_length</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">11</td>
+								  <td class="tg-0pky">username_length</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">12</td>
+								  <td class="tg-0pky">description_length</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">13</td>
+								  <td class="tg-0pky">num_digits_in_name</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">14</td>
+								  <td class="tg-0pky">num_digits_in_username</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">15</td>
+								  <td class="tg-0pky">names_ratio</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">16</td>
+								  <td class="tg-0pky">name_freq</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">17</td>
+								  <td class="tg-0pky">name_entropy</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">18</td>
+								  <td class="tg-0pky">username_entropy</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">19</td>
+								  <td class="tg-0pky">description_entropy</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">20</td>
+								  <td class="tg-0pky">description_sentiment</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">21</td>
+								  <td class="tg-0pky">names_sim</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">22</td>
+								  <td class="tg-0pky">url_in_description</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">23</td>
+								  <td class="tg-0pky">bot_in_names</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">24</td>
+								  <td class="tg-0pky">hashtag_in_description</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">25</td>
+								  <td class="tg-0pky">hashtag_in_name</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">26</td>
+								  <td class="tg-0pky">numbers_in_description</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">27</td>
+								  <td class="tg-0pky">numbers_in_name</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">28</td>
+								  <td class="tg-0pky">numbers_in_username</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">29</td>
+								  <td class="tg-0pky">emojis_in_description</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">30</td>
+								  <td class="tg-0pky">emojis_in_name</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">31</td>
+								  <td class="tg-0pky">favourites_count</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">32</td>
+								  <td class="tg-0pky">status_count</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">33</td>
+								  <td class="tg-0pky">default_profile</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">User Tweets</td>
+								  <td class="tg-0pky">1</td>
+								  <td class="tg-0pky">average BERT embedding of user’s 200 tweets textual content</td>
+								  <td class="tg-0pky">Tier 1</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky" rowspan="29"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Tweet Metadata<br></td>
+								  <td class="tg-0pky">1</td>
+								  <td class="tg-0pky">mean_no_emoticons</td>
+								  <td class="tg-0pky" rowspan="29"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Tier 1<br></td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">2</td>
+								  <td class="tg-0pky">mean_no_urls_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">3</td>
+								  <td class="tg-0pky">mean_no_media_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">4</td>
+								  <td class="tg-0pky">mean_no_words</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">5</td>
+								  <td class="tg-0pky">no_languages</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">6</td>
+								  <td class="tg-0pky">mean_no_hashtags</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">7</td>
+								  <td class="tg-0pky">mean_number_of_positive_emoticons_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">8</td>
+								  <td class="tg-0pky">mean_number_of_negative_emoticons_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">9</td>
+								  <td class="tg-0pky">mean_number_of_neutral_emoticons_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">10</td>
+								  <td class="tg-0pky">mean_tweet_sentiment</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">11</td>
+								  <td class="tg-0pky">mean_positive_valence_score_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">12</td>
+								  <td class="tg-0pky">mean_negative_valence_score_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">13</td>
+								  <td class="tg-0pky">mean_neutral_valence_score_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">14</td>
+								  <td class="tg-0pky">positive_valence_score_of_aggregated_tweets</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">15</td>
+								  <td class="tg-0pky">negative_valence_score_of_aggregated_tweets</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">16</td>
+								  <td class="tg-0pky">neutral_valence_score_of_aggregated_tweets</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">17</td>
+								  <td class="tg-0pky">mean_positive_and_negative_score_ratio_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">18</td>
+								  <td class="tg-0pky">mean_emoticons_entropy_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">19</td>
+								  <td class="tg-0pky">mean_emoticons_entropy_of_aggregated_tweets</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">20</td>
+								  <td class="tg-0pky">mean_negative_emoticons_entropy_of_aggregated_tweets</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">21</td>
+								  <td class="tg-0pky">mean_positive_emoticons_entropy_of_aggregated_tweets</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">22</td>
+								  <td class="tg-0pky">mean_neutral_emoticons_entropy_of_aggregated_tweets</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">23</td>
+								  <td class="tg-0pky">mean_positive_emoticons_entropy_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">24</td>
+								  <td class="tg-0pky">mean_negative_emoticons_entropy_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">25</td>
+								  <td class="tg-0pky">mean_neutral_emoticons_entropy_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">26</td>
+								  <td class="tg-0pky">mean_favourites_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">27</td>
+								  <td class="tg-0pky">mean_retweets_per_tweet</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">28</td>
+								  <td class="tg-0pky">no_retweet_tweets</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">29</td>
+								  <td class="tg-0pky">retweet_as_tweet_rate</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky" rowspan="7"><br><br><br><br><br><br><br>Tweet Temporal</td>
+								  <td class="tg-0pky">1</td>
+								  <td class="tg-0pky">time_between_tweets</td>
+								  <td class="tg-0pky" rowspan="7"><br><br><br><br><br><br><br>Tier 1</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">2</td>
+								  <td class="tg-0pky">tweet_frequency</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">3</td>
+								  <td class="tg-0pky">min_tweets_per_hour</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">4</td>
+								  <td class="tg-0pky">min_tweets_per_day</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">5</td>
+								  <td class="tg-0pky">max_tweets_per_hour</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">6</td>
+								  <td class="tg-0pky">max_tweets_per_day</td>
+								</tr>
+								<tr>
+								  <td class="tg-0pky">7</td>
+								  <td class="tg-0pky">max_occurence_of_same_gap</td>
+								</tr>
+						</tbody>
+					</table>
+				</div><!--//table-responsive-->
+			</section><!--//docs-intro-->
+		</header>
+		</article><!--//docs-article-->
+
+		<!-- <div class="table-responsive my-4">
+			<table class="table table-striped">
+				<thead>
+
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>	 -->
+		<article class="docs-article" id="evaluation">
+			<section class="docs-section">
+			<header class="docs-header">
+				<h1 class="docs-heading">Evaluation Metrics</h1>
+				<!-- <section class="docs-intro"> -->
+					<!-- <p>Generally, the contrastive loss itself is an evaluation metric. A lower contrastive loss indicates better model performance. On the other hand, we can also assess the quality of the learned representations by visualizing them in a lower-dimensional space using techniques such as t-SNE. However, in most common works, learned representations are subjected to linear evaluation for some downstream tasks (in this case, bot classification). Typically, this involves training a simple classification head $\textit{h}\ (\cdot)$, such as logistic regression or a linear Support Vector classifier (SVC), on top of the pre-trained encoder $\textit{f}\ (\cdot)$. We optimize the cross-entropy loss and fine-tune the parameters of $\textit{f}\ (\cdot)$ and $\textit{h}\ (\cdot)$. The benefit is having a simple model with fewer learnable parameters than the complex neural network used for representation learning. Additionally, evaluation provides a comprehensive understanding of the model's performance and generalization capabilities. Therefore, we depend on logistic regression for the evaluation in this work.  -->
+						<!-- Furthermore, we use precision (Prec), recall (Rec), and F1-score (F1) over the test dataset to evaluate the performance of baselines and our framework. We set the $`class\_weight'$ parameter of logistic regression to `balanced'. Note that when the dataset is imbalanced, these metrics are appropriate.</p> -->
+				<p>Generally, the contrastive loss itself is an evaluation metric. A lower
+					contrastive loss indicates better model performance. On the other hand, we can also assess the quality of the learned representations
+					by visualizing them in a lower-dimensional space using techniques
+					such as t-SNE. However, in most common works, learned repre-
+					sentations are subjected to linear evaluation for some downstream
+					tasks (in this case, bot classification). Typically, this involves train-
+					ing a simple classification head h (·), such as logistic regression or
+					a linear Support Vector classifier (SVC), on top of the pre-trained
+					encoder f (·). We optimize the cross-entropy loss and fine-tune the
+					parameters of f (·) and h (·). The benefit is having a simple model
+					with fewer learnable parameters than the complex neural network
+					used for representation learning. Additionally, evaluation provides
+					a comprehensive understanding of the model’s performance and
+					generalization capabilities. Therefore, we depend on logistic regres-
+					sion for the evaluation in this work. Furthermore, we use precision
+					(Prec), recall (Rec), and F1-score (F1) over the test dataset to evalu-
+					ate the performance of baselines and our framework. We set the
+					‘𝑐𝑙𝑎𝑠𝑠_𝑤𝑒𝑖𝑔ℎ𝑡′ parameter of logistic regression to ‘balanced’. Note
+					that when the dataset is imbalanced, these metrics are appropriate.</p>
+					</section><!--//docs-intro-->
+			</header>
+		</article><!--//docs-article-->
+
+		<article class="docs-article" id="experimental_setup">
+			<section class="docs-section">
+			<header class="docs-header">
+				<h1 class="docs-heading">Experimental Setup</h1>
+				<!-- <section class="docs-intro"> -->
+					<!-- <p>Our BotSSCL is a variant of \textit{SCARF}~\cite{bahri2021scarf} implemented in PyTorch version 1.12 with CUDA 10.7. We conducted our performance assessments using a server consisting of 2x Intel Xeon Silver 4208 processors with 128 GB of RAM, all running Ubuntu 20.04.01 LTS. The server has 4 NVIDIA Tesla T4 GPUs, each with 16GB of RAM, yet we specifically utilized a single GPU throughout the experiments. The model is trained using Adam optimizer with a default temperate of 1, no dropout, and a learning rate of 0.001.</p> -->
+				<p>Our BotSSCL is a variant of SCARF [4] implemented in PyTorch
+					version 1.12 with CUDA 10.7. We conducted our performance as-
+					sessments using a server consisting of 2x Intel Xeon Silver 4208
+					processors with 128 GB of RAM, all running Ubuntu 20.04.01 LTS.
+					The server has 4 NVIDIA Tesla T4 GPUs, each with 16GB of RAM,
+					yet we specifically utilized a single GPU throughout the experi-
+					ments. The model is trained using Adam optimizer with a default
+					temperate of 1, no dropout, and a learning rate of 0.001.</p>
+				</section><!--//docs-intro-->
+			</header>
+		</article><!--//docs-article-->
+
+
+				<article class="docs-article" id="results">
+					<section class="docs-section">
+					<header class="docs-header">
+						<h1 class="docs-heading">All Evaluation Results</h1>
+						<!-- <p>Table~\ref{tab:all_evalutation_varol} and \ref{tab:all_evalutation_gilani} displays all performed measurements and evaluations. The table specifies which dataset, Aug. technique, input, output dimension, and \textit{D} value have been used for the training and test set. The table contains the Precision, Recall, F1-score, and Accuracy achieved in percentages. As seen from Table~\ref{tab:all_evalutation_varol}, 16 input and  64 output dimensions are the best configurations (can also be written as 16$\times$64) for the Varol dataset achieving 80\%. On the other hand, the Gilani dataset works best with 64 as the input dimension and 64 as the output embedding dimension (64$\times$64), as depicted in Table~\ref{tab:all_evalutation_gilani}. Both results are optimal with Aug. 1 (feature corruption), with 0.6 as the corruption rate. It is worth noting that the Aug. 2 result for input and \textit{D} feature dimension of more than 32 dimensions is null as the MICE method is computationally expensive for larger dimensions. Therefore, it is not presented in the table.</p> -->
+						<p>Table 10 and 11 displays all performed measurements and evaluations. The table specifies which dataset, Aug. technique, input,
+							output dimension, and D value have been used for the training
+							and test set. The table contains the Precision, Recall, F1-score, and
+							Accuracy achieved in percentages. As seen from Table 10, 16 input
+							and 64 output dimensions are the best configurations (can also be
+							written as 16×64) for the Varol dataset achieving 80%. On the other
+							hand, the Gilani dataset works best with 64 as the input dimension
+							and 64 as the output embedding dimension (64×64), as depicted in
+							Table 11. Both results are optimal with Aug. 1 (feature corruption),
+							with 0.6 as the corruption rate. It is worth noting that the Aug. 2
+							result for input and D feature dimension of more than 32 dimensions is null as the MICE method is computationally expensive for
+							larger dimensions. Therefore, it is not presented in the table. Thus,
+							only result till 32×32 is achieved on both datasets on Aug. 2. These
+							results are used in Section 3.3.</p>
+						<!-- <p>We identified bot percentage discovered in original dataset from multiple studies:</p> -->
+				<div class="table-responsive my-4">
+					<caption><strong>Table 10</strong>: All evaluation cases. This table displays all performed measurements in (%) across different augmentation techniques
+						on the Varol Dataset. D refers to the input feature dimension, Dx4 is the Twitter user representation dimension, and Output
+						refers to the output embedding dimension.</caption>
+					<table class="table table-striped">
+						<!-- <caption>Monthly savings</caption> -->
+						<thead>
+							<tr>
+							  <th class="tg-za14">Test ID (DxOutput)</th>
+							  <th class="tg-za14">Dataset</th>
+							  <th class="tg-za14">Augmentation</th>
+							  <th class="tg-za14">D Input Feature</th>
+							  <th class="tg-za14">(Dx4)</th>
+							  <th class="tg-za14">Output</th>
+							  <th class="tg-za14">Precision</th>
+							  <th class="tg-za14">Recall</th>
+							  <th class="tg-za14">F1</th>
+							  <th class="tg-za14">Accuracy</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							<tr>
+							  <td class="tg-za14">16×16</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">75</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">75</td>
+							  <td class="tg-za14">78</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">16×32</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">75</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">78</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">16×64</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">80</td>
+							  <td class="tg-za14">81</td>
+							  <td class="tg-za14">80</td>
+							  <td class="tg-za14">82</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">16×128</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">78</td>
+							  <td class="tg-za14">80</td>
+							  <td class="tg-za14">79</td>
+							  <td class="tg-za14">81</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">32×16</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">75</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">75</td>
+							  <td class="tg-za14">78</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">32×32</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">78</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">80</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">32×64</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">78</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">79</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">32×128</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">78</td>
+							  <td class="tg-za14">80</td>
+							  <td class="tg-za14">78</td>
+							  <td class="tg-za14">80</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">64×16</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">256</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">78</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">79</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">64×32</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">256</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">78</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">79</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">64×64</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">256</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">78</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">79</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">64×128</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">256</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">78</td>
+							  <td class="tg-za14">79</td>
+							  <td class="tg-za14">78</td>
+							  <td class="tg-za14">80</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">128×16</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">512</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">78</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">79</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">128×32</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">512</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">80</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">128×64</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">512</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">78</td>
+							  <td class="tg-za14">80</td>
+							  <td class="tg-za14">79</td>
+							  <td class="tg-za14">81</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">128×128</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">1</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">512</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">79</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">80</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">16×16</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">2</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">71</td>
+							  <td class="tg-za14">73</td>
+							  <td class="tg-za14">72</td>
+							  <td class="tg-za14">75</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">16×32</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">2</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">71</td>
+							  <td class="tg-za14">73</td>
+							  <td class="tg-za14">72</td>
+							  <td class="tg-za14">75</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">32×16</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">2</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">71</td>
+							  <td class="tg-za14">72</td>
+							  <td class="tg-za14">71</td>
+							  <td class="tg-za14">75</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">32×32</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">2</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">73</td>
+							  <td class="tg-za14">75</td>
+							  <td class="tg-za14">73</td>
+							  <td class="tg-za14">77</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">16×16</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">72</td>
+							  <td class="tg-za14">72</td>
+							  <td class="tg-za14">72</td>
+							  <td class="tg-za14">76</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">16×32</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">68</td>
+							  <td class="tg-za14">69</td>
+							  <td class="tg-za14">69</td>
+							  <td class="tg-za14">72</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">16×64</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">79</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">16×128</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">75</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">79</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">32×16</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">63</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">63</td>
+							  <td class="tg-za14">67</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">32×32</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">72</td>
+							  <td class="tg-za14">74</td>
+							  <td class="tg-za14">72</td>
+							  <td class="tg-za14">75</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">32×64</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">71</td>
+							  <td class="tg-za14">73</td>
+							  <td class="tg-za14">72</td>
+							  <td class="tg-za14">75</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">32×128</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">79</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">64×16</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">256</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">67</td>
+							  <td class="tg-za14">68</td>
+							  <td class="tg-za14">67</td>
+							  <td class="tg-za14">70</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">64×32</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">256</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">80</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">64×64</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">256</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">74</td>
+							  <td class="tg-za14">73</td>
+							  <td class="tg-za14">73</td>
+							  <td class="tg-za14">77</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">64×128</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">256</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">74</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">75</td>
+							  <td class="tg-za14">77</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">128×16</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">512</td>
+							  <td class="tg-za14">16</td>
+							  <td class="tg-za14">70</td>
+							  <td class="tg-za14">71</td>
+							  <td class="tg-za14">71</td>
+							  <td class="tg-za14">74</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">128×32</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">512</td>
+							  <td class="tg-za14">32</td>
+							  <td class="tg-za14">73</td>
+							  <td class="tg-za14">75</td>
+							  <td class="tg-za14">74</td>
+							  <td class="tg-za14">76</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">128×64</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">512</td>
+							  <td class="tg-za14">64</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">77</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">79</td>
+							</tr>
+							<tr>
+							  <td class="tg-za14">128×128</td>
+							  <td class="tg-za14">Varol</td>
+							  <td class="tg-za14">3</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">512</td>
+							  <td class="tg-za14">128</td>
+							  <td class="tg-za14">75</td>
+							  <td class="tg-za14">76</td>
+							  <td class="tg-za14">75</td>
+							  <td class="tg-za14">78</td>
+							</tr>
+						</tbody>
+					</table>
+				</div><!--//table-responsive-->
+
+
+				<div class="table-responsive my-4">
+					<caption><strong>Table 11</strong>: All evaluation cases. This table displays all performed measurements in (%) across different augmentation techniques
+						on the Gilani Dataset. D refers to the input feature dimension, D×4 is the Twitter user representation dimension, and Output
+						refers to the output embedding dimension.</caption>
+					<table class="table table-striped">
+						<!-- <caption>Monthly savings</caption> -->
+						<tr>
+							<th class="tg-za14">Test ID (DxOutput)</th>
+							<th class="tg-za14">Dataset</th>
+							<th class="tg-za14">Augmentation</th>
+							<th class="tg-za14">D Input Feature</th>
+							<th class="tg-za14">(Dx4)</th>
+							<th class="tg-za14">Output</th>
+							<th class="tg-za14">Precision</th>
+							<th class="tg-za14">Recall</th>
+							<th class="tg-za14">F1</th>
+							<th class="tg-za14">Accuracy</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr>
+							<td class="tg-za14">16×16</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">76</td>
+							<td class="tg-za14">76</td>
+							<td class="tg-za14">76</td>
+							<td class="tg-za14">77</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">16×32</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">76</td>
+							<td class="tg-za14">76</td>
+							<td class="tg-za14">76</td>
+							<td class="tg-za14">77</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">16×64</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">78</td>
+							<td class="tg-za14">78</td>
+							<td class="tg-za14">78</td>
+							<td class="tg-za14">78</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">16×128</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">78</td>
+							<td class="tg-za14">78</td>
+							<td class="tg-za14">78</td>
+							<td class="tg-za14">78</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">32×16</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">76</td>
+							<td class="tg-za14">76</td>
+							<td class="tg-za14">77</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">32×32</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">75</td>
+							<td class="tg-za14">75</td>
+							<td class="tg-za14">75</td>
+							<td class="tg-za14">76</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">32×64</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">76</td>
+							<td class="tg-za14">76</td>
+							<td class="tg-za14">77</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">32×128</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">78</td>
+							<td class="tg-za14">78</td>
+							<td class="tg-za14">78</td>
+							<td class="tg-za14">78</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">64×16</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">256</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">77</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">64×32</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">256</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">78</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">64×64</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">256</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">79</td>
+							<td class="tg-za14">79</td>
+							<td class="tg-za14">79</td>
+							<td class="tg-za14">80</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">64×128</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">256</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">78</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">128×16</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">512</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">78</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">78</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">128×32</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">512</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">76</td>
+							<td class="tg-za14">76</td>
+							<td class="tg-za14">76</td>
+							<td class="tg-za14">77</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">128×64</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">512</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">79</td>
+							<td class="tg-za14">78</td>
+							<td class="tg-za14">78</td>
+							<td class="tg-za14">79</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">128×128</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">1</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">512</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">77</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">16×16</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">2</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">70</td>
+							<td class="tg-za14">69</td>
+							<td class="tg-za14">70</td>
+							<td class="tg-za14">71</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">16×32</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">2</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">70</td>
+							<td class="tg-za14">70</td>
+							<td class="tg-za14">70</td>
+							<td class="tg-za14">71</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">32×16</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">2</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">68</td>
+							<td class="tg-za14">67</td>
+							<td class="tg-za14">68</td>
+							<td class="tg-za14">69</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">32×32</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">2</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">72</td>
+							<td class="tg-za14">71</td>
+							<td class="tg-za14">71</td>
+							<td class="tg-za14">73</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">16×16</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">69</td>
+							<td class="tg-za14">69</td>
+							<td class="tg-za14">69</td>
+							<td class="tg-za14">69</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">16×32</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">71</td>
+							<td class="tg-za14">70</td>
+							<td class="tg-za14">70</td>
+							<td class="tg-za14">71</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">16×64</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">71</td>
+							<td class="tg-za14">71</td>
+							<td class="tg-za14">71</td>
+							<td class="tg-za14">71</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">16×128</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">73</td>
+							<td class="tg-za14">73</td>
+							<td class="tg-za14">73</td>
+							<td class="tg-za14">74</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">32×16</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">70</td>
+							<td class="tg-za14">70</td>
+							<td class="tg-za14">70</td>
+							<td class="tg-za14">71</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">32×32</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">72</td>
+							<td class="tg-za14">72</td>
+							<td class="tg-za14">72</td>
+							<td class="tg-za14">72</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">32×64</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">74</td>
+							<td class="tg-za14">75</td>
+							<td class="tg-za14">74</td>
+							<td class="tg-za14">75</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">32×128</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">74</td>
+							<td class="tg-za14">74</td>
+							<td class="tg-za14">74</td>
+							<td class="tg-za14">75</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">64×16</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">256</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">75</td>
+							<td class="tg-za14">73</td>
+							<td class="tg-za14">74</td>
+							<td class="tg-za14">75</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">64×32</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">256</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">68</td>
+							<td class="tg-za14">69</td>
+							<td class="tg-za14">68</td>
+							<td class="tg-za14">69</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">64×64</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">256</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">74</td>
+							<td class="tg-za14">73</td>
+							<td class="tg-za14">73</td>
+							<td class="tg-za14">75</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">64×128</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">256</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">77</td>
+							<td class="tg-za14">78</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">128×16</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">512</td>
+							<td class="tg-za14">16</td>
+							<td class="tg-za14">69</td>
+							<td class="tg-za14">68</td>
+							<td class="tg-za14">69</td>
+							<td class="tg-za14">70</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">128×32</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">512</td>
+							<td class="tg-za14">32</td>
+							<td class="tg-za14">74</td>
+							<td class="tg-za14">73</td>
+							<td class="tg-za14">74</td>
+							<td class="tg-za14">74</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">128×64</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">512</td>
+							<td class="tg-za14">64</td>
+							<td class="tg-za14">75</td>
+							<td class="tg-za14">75</td>
+							<td class="tg-za14">75</td>
+							<td class="tg-za14">76</td>
+						  </tr>
+						  <tr>
+							<td class="tg-za14">128×128</td>
+							<td class="tg-za14">Gilani</td>
+							<td class="tg-za14">3</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">512</td>
+							<td class="tg-za14">128</td>
+							<td class="tg-za14">75</td>
+							<td class="tg-za14">75</td>
+							<td class="tg-za14">75</td>
+							<td class="tg-za14">76</td>
+						  </tr>
+						</tbody>
+					</table>
+				</div>
+
+			</section><!--//docs-intro-->
+		</header>
+		</article><!--//docs-article-->
+
+
+		<article class="docs-article" id="ablations">
+			<section class="docs-section">
+			<header class="docs-header">
+				<h1 class="docs-heading">Ablations</h1>
+				<section class="docs-intro">
+					<!-- <p>Both inferential and descriptive approaches use various features in their model. We find five dimensions of feature groups for every account: user profile-based, content-based, temporal-based, devices-based, and network-based features. However, we have combined the device features with the user and temporal features with the network features, as one can be derived from the other. </p> -->
+					<ol>
+						<li><span id="batch_size"><strong class="me-1">Impact of Batch Size:</strong>For contrastive learning, we depend on the negatives that are drawn
+							from the mini-batch. With a smaller batch size, only a few negatives
+							are available. Thus, we tested the performance of BotSSCL with 128,
+							256, and 512 increasing values of batch sizes. Our findings suggest
+							that a batch size of 512 achieves 76% (F1) and 79% (F1) on D1 and D2,
+							respectively. In contrast, a batch size of 128 only achieves 75% and
+							76% (F1) on both datasets, respectively. The results are presented in Table 12. Our findings suggest that increasing batch size results in
+							significant improvements, which is also highlighted in other work
+							using contrastive learning like SimCLR [8].
+							<br><br>
+
+							<div class="table-responsive my-4">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th class="tg-7zrl">Dataset</th>
+											<th class="tg-7zrl">Batch Size</th>
+											<th class="tg-7zrl">Prec.</th>
+											<th class="tg-7zrl">Rec.</th>
+											<th class="tg-7zrl">F1</th>
+										  </tr>
+										</thead>
+										<tbody>
+										<tr>
+											<td class="tg-0lax" rowspan="3"><br><br>Varol</td>
+											<td class="tg-7zrl">128</td>
+											<td class="tg-7zrl">74.6</td>
+											<td class="tg-7zrl">75.8</td>
+											<td class="tg-7zrl">75.1</td>
+										  </tr>
+										  <tr>
+											<td class="tg-7zrl">256</td>
+											<td class="tg-7zrl">73.8</td>
+											<td class="tg-7zrl">75.9</td>
+											<td class="tg-7zrl">74.5</td>
+										  </tr>
+										  <tr>
+											<td class="tg-7zrl">512</td>
+											<td class="tg-7zrl">76.1</td>
+											<td class="tg-7zrl">78.1</td>
+											<td class="tg-7zrl">76.5</td>
+										  </tr>
+										  <tr>
+											<td class="tg-0lax" rowspan="3"><br><br>Gilani</td>
+											<td class="tg-7zrl">128</td>
+											<td class="tg-7zrl">76.1</td>
+											<td class="tg-7zrl">78.1</td>
+											<td class="tg-7zrl">76.8</td>
+										  </tr>
+										  <tr>
+											<td class="tg-7zrl">256</td>
+											<td class="tg-7zrl">78.9</td>
+											<td class="tg-7zrl">78.8</td>
+											<td class="tg-7zrl">76.8</td>
+										  </tr>
+										  <tr>
+											<td class="tg-7zrl">512</td>
+											<td class="tg-7zrl">79.2</td>
+											<td class="tg-7zrl">79.2</td>
+											<td class="tg-7zrl">79.3</td>
+										  </tr>
+									</tbody>
+								</table>
+							</div>	
+
+							<!-- <p>Furthermore, these features can be trained with a supervised classifier like a Random forest model. We mentioned Random Forest, which has been widely adopted and accepted in several user featurebased bot detection researches [5]. Since <i>“Random forest model can learn nonlinear decision boundaries, can handle a large amount of dataset and unnormalized features for training"</i> [6]. However, due to the simplicity of the features, such models face the issue of feature tampering by adversaries. For example, maintaining a balance between followers and the following level takes less effort by a malicious user.</p></span></li> -->
+						<li><span id="epochs"><strong class="me-1">Impact of Epochs:</strong>Similar to batch size, we can also increase the number of epochs
+							for training the model. Generally, with more extended training, we
+							expect BotSSCL to familiarize itself with various negatives drawn in
+							different batches in different epochs. Therefore, we tested BotSSCL
+							performance with 1000, 5000, and 10000 epochs. We see that per-
+							formance is 76% and 79% on both datasets when the epoch is 5000
+							(see Table 13). However, performance drops when the epoch values
+							are changed.
+							<br><br>
+
+							<div class="table-responsive my-4">
+								<table class="table table-striped">
+									<tr>
+										<th class="tg-za14">Dataset</th>
+										<th class="tg-za14">Epoch</th>
+										<th class="tg-za14">Time Taken</th>
+										<th class="tg-za14">Batch Size</th>
+										<th class="tg-za14">Prec.</th>
+										<th class="tg-za14">Rec.</th>
+										<th class="tg-za14">F1</th>
+									  </tr>
+									</thead>
+									<tbody>
+									  <tr>
+										<td class="tg-0pky" rowspan="3"><br><br><br>Varol<br><br></td>
+										<td class="tg-za14">1,000</td>
+										<td class="tg-za14">≈ 3 minutes</td>
+										<td class="tg-za14">512</td>
+										<td class="tg-za14">75.1</td>
+										<td class="tg-za14">77.2</td>
+										<td class="tg-za14">75.8</td>
+									  </tr>
+									  <tr>
+										<td class="tg-za14">5,000</td>
+										<td class="tg-za14">≈ 15 minutes</td>
+										<td class="tg-za14">512</td>
+										<td class="tg-za14">76.1</td>
+										<td class="tg-za14">78.1</td>
+										<td class="tg-za14">76.8</td>
+									  </tr>
+									  <tr>
+										<td class="tg-za14">10,000</td>
+										<td class="tg-za14">≈ 30 minutes</td>
+										<td class="tg-za14">512</td>
+										<td class="tg-za14">75.1</td>
+										<td class="tg-za14">77.4</td>
+										<td class="tg-za14">75.9</td>
+									  </tr>
+									  <tr>
+										<td class="tg-0pky" rowspan="3"><br><br><br>Gilani<br><br></td>
+										<td class="tg-za14">1,000</td>
+										<td class="tg-za14">≈ 3 minutes</td>
+										<td class="tg-za14">512</td>
+										<td class="tg-za14">77.1</td>
+										<td class="tg-za14">76.5</td>
+										<td class="tg-za14">76.7</td>
+									  </tr>
+									  <tr>
+										<td class="tg-za14">5,000</td>
+										<td class="tg-za14">≈ 15 minutes</td>
+										<td class="tg-za14">512</td>
+										<td class="tg-za14">79.4</td>
+										<td class="tg-za14">79.3</td>
+										<td class="tg-za14">79.4</td>
+									  </tr>
+									  <tr>
+										<td class="tg-za14">10,000</td>
+										<td class="tg-za14">≈ 30 minutes</td>
+										<td class="tg-za14">512</td>
+										<td class="tg-za14">78.3</td>
+										<td class="tg-za14">78.1</td>
+										<td class="tg-za14">78.2</td>
+									  </tr>
+									</tbody>
+								</table>
+							</div>	
+
+							<!-- <p>Moving ahead, Varol et al. [8] uses various network features such as network density, clustering coefficient, retweet network, and instrength and out-strength (weighted degree) distribution. Such features help anomaly detection and provide signals for looking further into dense networks of followers and friends of suspicious accounts. Other recent works focus on graph-based techniques using network features, such as node centrality [9] or Graph neural networks [10]. However, graph-based techniques and network features are computationally expensive in terms of collection time. Collecting large-scale datasets from Twitter is a technical hindrance due to Twitter rate limit issues [11], [12]. According to Beskow and Carley [1], it takes about 20 hours to collect network information of 250 accounts. Thus, most of the work remains till Tier 2 of data collection, which consists of user and timeline information.</p></span></li> -->
+							<!-- <p><b>Takeaway A1</b>: Network features are paramount for detection, though researchers avoid it due to data collection time and resource constraints.</p>	 -->
+						<li><span id="loss_function"><strong class="me-1">Impact of Loss Functions:</strong>Table 6 shows the performance on both datasets if we use different
+							contrastive losses. One loss typically separates data points in the
+							embedding space without knowing the knowledge of labels, and
+							the other uses label information. However, the supervised loss
+							in Eq. 8 can also lead to another choice for the loss function to
+							eliminate all positive terms from negative in the denominator with
+							respect to sample i to contrast with only negatives as 𝑁𝑒𝑔(𝑖) =
+							{𝑘 ∈ 𝐴(𝑖), 𝑤ℎ𝑒𝑟𝑒  ̃𝑦𝑘 ≠  ̃𝑦𝑖 }, i.e., 2(𝑁 − |𝑃𝑜𝑠(𝑖)|) terms. Thus, the
+							new modified loss becomes:
+							<br> 
+							<div style="text-align: center;">
+								<img style="width:60%" src="images/formula.png" alt="Snow">
+								<!-- <p style="text-align:center;">(a) Visualization of human and bot accounts in different training datasets, Figure Source: [59]. The last three datasets -->
+									<!-- (especially Varol and Gilani) show the minimum homogeneity and separability problems between the bot and human classes.</p> -->
+								</div>
+
+							<!-- <div class="table-responsive my-4">
+								<table class="table table-striped">
+									<thead>
+
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+							</div>	 -->
+							<!-- <p><b>Research Gap A1</b>: We note that limited work leverage features from content posted by bots. This may be an important feature to differentiate between benign and malicious bots.</p> -->
+					</ol>
+				</section>
+			</header>
+		</article>
+		
+
+		<article class="docs-article" id="features_manipulation">
+			<section class="docs-section">
+			<header class="docs-header">
+				<h1 class="docs-heading">Features used in Adversarial Attack</h1>
+				<section class="docs-intro">
+					<p>This appendix discusses the features used in adversarial perturbations to inputs (cf. §3.5) and the reasoning behind their selection.</p>
+					<!-- <p>False information literature is analyzed with the following characterization: </p> -->
+					<ul>
+						<li>In the user metadata feature, an attacker can feasibly alter two
+							features, i.e., number of followers and number of followings. As previously defined, attackers can make all purchased accounts fol-
+							low the master account. It means there is a possibility of values
+							from 0 (no followers) to 1000 (all fake followers).</li>
+						<li>In the tweet metadata feature, an adversary can modify three
+							features. First, they can change the mean number of words in a
+							tweet. Considering a 5.1 average number of characters per word,
+							an adversary can use either one word or 55 words in a tweet (as
+							Twitter allows 280 characters at most) [55]. Second, the adversary
+							can control the mean number of favorites (likes) per tweet. Values
+							can be from 0 (no likes) to 1000 (all fake likes). Lastly, as we know,
+							it is easier for a bot account owner to retweet instead of producing
+							original content [2]. It should be noted that Twitter also considers
+							retweets as tweets, and there is a 2400 Twitter tweet limit per
+							day [19]. However, in our case, we limit the value to 200 instead of
+							2400 as 200 relates to the number of tweets collected per account by
+							our team during data collection from Twitter. In our threat model,
+							the adversary can control the posting of the number of retweets,
+							thereby perturbing the ratio of retweets and tweets.</li>
+						<li>In the tweet temporal feature, the adversary can modify two
+							attributes, i.e., the maximum number of tweets per hour and day.
+							Twitter limits the maximum number of tweets to 100 per hour and
+							2400 per day [19, 20]. However, in our case, the adversary can post
+							a maximum of 200 tweets daily and up to 100 tweets per hour.</li>
+						<li>Finally, an adversary can perturb a combination of all the above
+							features, thereby manipulating seven prominent features in total</li>
+						</ul>
+				</section><!--//docs-intro-->
+			</header>
+		</article><!--//docs-article-->
+
+		<article class="docs-article" id="adversarial_perturbations">
+			<section class="docs-section">
+			<header class="docs-header">
+				<h1 class="docs-heading">Choice for Adversarial Perturbations of initial samples</h1>
+				<!-- <section class="docs-intro"> -->
+					<p>The URET [16] allows an argument to set the number of samples
+						to input to the model for adversarial perturbation. Practically, the
+						number of the sample can be the whole dataset. However, for the
+						adversarial evaluation of BotSSCL, we only provided part of the
+						dataset (200 samples). We intended to show that it is computationally infeasible for an adversary to create many adversarial accounts.
+						<br><br>
+						After testing with varying sample input sizes, we opted for 200
+						as the appropriate number. Table 14 shows that the time taken to
+						generate adversarial samples increases as we increase the number
+						of input samples (from 200 to 300). Both user and tweet metadata have features with an extensive range of possible values that URET
+						chooses to modify; this is why we can see the increase in the time
+						taken to create adversarial inputs. Therefore, choosing 200 due to
+						the constraint factor is an appropriate value for adversarial robustness evaluation.</p>
+						<br>
+
+						<div class="table-responsive my-4">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+									  <th class="tg-za14" rowspan="2">Adversarial Manipulation</th>
+									  <th class="tg-za14" colspan="3">BotSSCL (out of 200 sample)</th>
+									  <th class="tg-za14" colspan="3">BotSSCL (out of 300 sample)</th>
+									</tr>
+									<tr>
+									  <th class="tg-za14">Success Rate</th>
+									  <th class="tg-za14">Samples</th>
+									  <th class="tg-za14">Time Taken</th>
+									  <th class="tg-za14">Success Rate</th>
+									  <th class="tg-za14">Samples</th>
+									  <th class="tg-za14">Time Taken</th>
+									</tr>
+								  </thead>
+								  <tbody>
+									<tr>
+									  <td class="tg-za14">1) User Metadata Feature</td>
+									  <td class="tg-za14">0.50%</td>
+									  <td class="tg-za14">1</td>
+									  <td class="tg-za14">≈ 10 Hours</td>
+									  <td class="tg-za14">0%</td>
+									  <td class="tg-za14">0</td>
+									  <td class="tg-za14">≈ 18 Hours</td>
+									</tr>
+									<tr>
+									  <td class="tg-za14">2) Tweet Metadata Feature</td>
+									  <td class="tg-za14">2.50%</td>
+									  <td class="tg-za14">5</td>
+									  <td class="tg-za14">≈ 9 Hours</td>
+									  <td class="tg-za14">1%</td>
+									  <td class="tg-za14">3</td>
+									  <td class="tg-za14">≈ 12.5 Hours</td>
+									</tr>
+									<tr>
+									  <td class="tg-za14">3) Tweet Temporal Feature</td>
+									  <td class="tg-za14">12.50%</td>
+									  <td class="tg-za14">25</td>
+									  <td class="tg-za14">≈ 3 Hours</td>
+									  <td class="tg-za14">10.60%</td>
+									  <td class="tg-za14">32</td>
+									  <td class="tg-za14">≈ 3 Hours</td>
+									</tr>
+									<tr>
+									  <td class="tg-za14">4) All Above Three Feature</td>
+									  <td class="tg-za14">4%</td>
+									  <td class="tg-za14">8</td>
+									  <td class="tg-za14">≈ 19.5 Hours</td>
+									  <td class="tg-za14">4%</td>
+									  <td class="tg-za14">12</td>
+									  <td class="tg-za14">≈ 20 Hours</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+
+				</section><!--//docs-intro-->
+			</header>
+		</article><!--//docs-article-->
+
+		<article class="docs-article" id="attack">
+			<section class="docs-section">
+			<header class="docs-header">
+				<h1 class="docs-heading">Textual Feature Perturbations using Generative AI (ChatGPT)</h1>
+				<!-- <section class="docs-intro"> -->
+					<p>We detail the adversary’s capability to modify the textual content
+						of tweets as below:</p>
+					<ol>
+						<li>The adversary can pass {input queries} for new
+							generation/paraphrasing/re-written and receive {output tokens} from generative AI such as ChatGPT [37].</li>
+						<li>The adversary can manipulate their tweet individually one by
+							one and test whether the model flips the prediction</li>
+						<li>Receiving modified/paraphrased/re-written tweets from Chat-GPT also changes the tweet metadata features, representing more
+							accurate perturbations.</li>
+						<li>We here show only 20 samples of bots with a minimum of
+							150 tweets (with a maximum of 200 collected tweets) posted in
+							their timeline as ChatGPT has a constraint for every input/output
+							token involved per query, which we refer to as a prompt budget
+							the adversary is ready to spend</li>	
+					</ol>	
+					<p>Our results show that out of 20 accounts, only one flipped the output
+						after 193 prompts. Our analysis shows that textual adversarial attack
+						success is at most 5% as shown in Table 15.</p>
+					<!-- <br><br> -->
+					<p><strong>Why did we choose ChatGPT?</strong>: We find that TextAttack [35],
+						URET [16], and text spinners such as Quillbot [39] already exist
+						in addition to generative AI tools. We chose not to use TextAttack
+						as it offers limited transformation of input queries via word substitution, such as substituting with the word ‘banana’. In addition,
+						the URET model can aid in text manipulation but is built upon the existing libraries such as TextAttack, thus only offering new string
+						generation based on substitution, addition, and deletion of characters. Finally, text spinners can generate paraphrases or unique
+						output but do not always meet the 280-character Twitter tweet’s
+						requirement. Due to this, we opted for ChatGPT as the appropriate
+						generative AI tool for the adversary.</p>	
+						<br>
+						<div class="table-responsive my-4">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th class="tg-za14" rowspan="2">Adversarial Manipulation</th>
+										<th class="tg-za14" colspan="3">BotSSCL (out of 20 sample)</th>
+									  </tr>
+									  <tr>
+										<th class="tg-za14">Success Rate</th>
+										<th class="tg-za14">Samples</th>
+										<th class="tg-za14">Time Taken</th>
+									  </tr>
+									</thead>
+									<tbody>
+									  <tr>
+										<td class="tg-za14">1) Textual Content Feature</td>
+										<td class="tg-za14">5.0%</td>
+										<td class="tg-za14">1</td>
+										<td class="tg-za14">≈ 5 Hours</td>
+									  </tr>
+								</tbody>
+							</table>
+						</div>
+						
+				</section><!--//docs-intro-->
+			</header>
+		</article><!--//docs-article-->
+
+		<article class="docs-article" id="augmentations">
+			<section class="docs-section">
+			<header class="docs-header">
+				<h1 class="docs-heading">Augmentation Settings</h1>
+				<!-- <section class="docs-intro"> -->
+					<p>In contrastive learning, using positive and negative pairs encour-
+						ages the model to learn discriminative features. As previously men-
+						tioned, the augmentation creates positives (as other views of the original data). This augmentation can be applied in two settings as
+						follows:
+						<br><br>
+						<strong>Two-view Augmentation</strong>: Typically, two-view augmentation
+						is a more common approach in contrastive learning. The original
+						sample (anchor, denoted as 𝑥𝑖 ) is passed through the augmentation
+						technique twice to generate two views of the original data as pos-
+						itive samples (  ̃𝑥𝑖 and  ̃ ̃𝑥𝑖 ). Contrastive training then utilizes these
+						two pairs. Figure 4b shows the approach.
+						<br><br>
+					    <strong>One-view Augmentation</strong>: In the second type, every sample in
+						the dataset yields a single positive (  ̃𝑥𝑖 ) using augmentation. The
+						rationale behind using a one-view (positive) sample strategy along-
+						side an anchor is to maintain a certain level of similarity compared
+						to employing a two-view augmentation approach. Using two-view
+						augmentation of the anchor has a high chance of reducing shared
+						mutual information between two positive views. Hence, for our
+						work, we employed a one-view augmentation setting.
+<!-- 
+						<div class="row">
+							<div class="column"> -->
+								<div style="text-align: center;">
+									<embed src="images/one-two-view.pdf" width="375px" height="235px" />
+									<!-- <img style="width:90%" src="images/augmentation.pdf" alt="Snow"> -->
+									<p style="text-align:center;">One or Two-view level augmentation</p>
+									</div>
+									<br>
+									<div style="text-align: center;">
+										<embed src="images/augmentation.pdf" width="700px" height="330px" />
+										<!-- <img style="width:90%" src="images/augmentation.pdf" alt="Snow"> -->
+										<p style="text-align:center;">Different Aug. used in our BotSSCL</p>
+										<!-- </div>
+							</div> -->
+						</div>
+						</p>
+				</section><!--//docs-intro-->
+			</header>
+		</article><!--//docs-article-->
+
+		<article class="docs-article" id="author_info">
+			<section class="docs-section">
+			<header class="docs-header">
+				<h1 class="docs-heading">Authors Information</h1>
+				<!-- <section class="docs-intro"> -->
+					<p>
+						<ol>
+							<li><strong>Mohammad Majid Akhtar</strong>, University of New South Wales, Sydney, Australia</li>
+							<li><strong>Navid Shadman Bhuiyan</strong>, University of New South Wales, Sydney, Australia</li>
+							<li><strong>Rahat Masood</strong>, University of New South Wales, Sydney, Australia</li>
+							<li><strong>Muhammad Ikram</strong>, Macquarie University, Sydney, Australia</li>
+							<li><strong>Salil S. Kanhere</strong>, University of New South Wales, Sydney, Australia</li>
+						</ol>
+						<!-- <br><br> -->
+						
+							
+						
+						</p>
+				</section><!--//docs-intro-->
+			</header>
+		</article><!--//docs-article-->
+
+		
+		<!-- <article class="docs-article" id="references">
+			<section class="docs-section">
+			<header class="docs-header">
+				<h1 class="docs-heading">References</h1> -->
+				<!-- <section class="docs-intro"> -->
+					<!-- <ol>
+						<li>Beskow, D. M., & Carley, K. M. (2018, July). Bot-hunter: a tiered approach to detecting & characterizing automated activity on twitter. In Conference paper. SBP-BRiMS: International conference on social computing, behavioral-cultural modeling and prediction and behavior representation in modeling and simulation (Vol. 3, No. 3).</li>
+						<li>Hayawi, K., Mathew, S., Venugopal, N., Masud, M. M., & Ho, P. H. (2022). DeeProBot: a hybrid deep neural network model for social bot detection based on user profile data. Social Network Analysis and Mining, 12(1), 43.</li>
+						<li>Kudugunta, S., & Ferrara, E. (2018). Deep neural networks for bot detection. Information Sciences, 467, 312-322.</li>
+						<li>Davis, C. A., Varol, O., Ferrara, E., Flammini, A., & Menczer, F. (2016, April). Botornot: A system to evaluate social bots. In Proceedings of the 25th international conference companion on world wide web (pp. 273-274).</li>
+						<li>Latah, M. (2020). Detection of malicious social bots: A survey and a refined taxonomy. Expert Systems with Applications, 151, 113383.</li>
+						<li>Vargas, L., Emami, P., & Traynor, P. (2020, November). On the detection of disinformation campaign activity with network analysis. In Proceedings of the 2020 ACM SIGSAC Conference on Cloud Computing Security Workshop (pp. 133-146).s</li>
+						<li>Schuchard, R. J., & Crooks, A. T. (2021). Insights into elections: An ensemble bot detection coverage framework applied to the 2018 US midterm elections. Plos one, 16(1), e0244309.</li>
+						<li>Varol, O., Ferrara, E., Davis, C., Menczer, F., & Flammini, A. (2017, May). Online human-bot interactions: Detection, estimation, and characterization. In Proceedings of the international AAAI conference on web and social media (Vol. 11, No. 1, pp. 280-289).</li>
+						<li>Dehghan, A., Siuta, K., Skorupka, A., Dubey, A., Betlen, A., Miller, D., ... & Pralat, P. (2022). Detecting Bots in Social-Networks Using Node and Structural Embeddings.</li>
+						<li>Feng, S., Tan, Z., Wan, H., Wang, N., Chen, Z., Zhang, B., ... & Luo, M. (2022). TwiBot-22: Towards graph-based Twitter bot detection. arXiv preprint arXiv:2206.04564.</li>
+						<li>Wright, J., & Anise, O. (2018). Don’t@ me: Hunting twitter bots at scale. Blackhat USA.</li>
+						<li>Twitter Inc., “Rate Limits,” https://developer.twitter.com/en/docs/rate-limits, 2023, [Online; accessed 19-Mar-2023].</li>
+						<li>Derhab, A., Alawwad, R., Dehwah, K., Tariq, N., Khan, F. A., & Al-Muhtadi, J. (2021). Tweet-based bot detection using big data analytics. IEEE Access, 9, 65988-66005.</li>
+						<li>Morstatter, F., Wu, L., Nazer, T. H., Carley, K. M., & Liu, H. (2016, August). A new approach to bot detection: striking the balance between precision and recall. In 2016 IEEE/ACM International Conference on Advances in Social Networks Analysis and Mining (ASONAM) (pp. 533-540). IEEE.</li>
+						<li>Heidari, M., & Jones, J. H. (2020, October). Using bert to extract topic-independent sentiment features for social media bot detection. In 2020 11th IEEE Annual Ubiquitous Computing, Electronics & Mobile Communication Conference (UEMCON) (pp. 0542-0547). IEEE.</li> -->
+						<!--  -->
+						<!-- <li>Vosoughi, S., Roy, D., & Aral, S. (2018). The spread of true and false news online. science, 359(6380), 1146-1151.</li>
+						<li>Inwood, O., & Zappavigna, M. (2022). A Systemic Functional Linguistics Approach to Analyzing White Supremacist and Conspiratorial Discourse on YouTube. The Communication Review, 25(3-4), 204-234.</li>
+						<li>Nakamura, K., Levy, S., & Wang, W. Y. (2019). r/fakeddit: A new multimodal benchmark dataset for fine-grained fake news detection. arXiv preprint arXiv:1911.03854.</li>
+						<li>Shu, K., Mahudeswaran, D., Wang, S., Lee, D., & Liu, H. (2020). Fakenewsnet: A data repository with news content, social context, and spatiotemporal information for studying fake news on social media. Big data, 8(3), 171-188.</li>
+						<li>Stein, J., Frey, V., & van de Rijt, A. (2023). Realtime user ratings as a strategy for combatting misinformation: an experimental study. Scientific reports, 13(1), 1626.</li>
+						<li>Wang, W. Y. (2017). " liar, liar pants on fire": A new benchmark dataset for fake news detection. arXiv preprint arXiv:1705.00648.</li>
+						<li>Huh, M., Liu, A., Owens, A., & Efros, A. A. (2018). Fighting fake news: Image splice detection via learned self-consistency. In Proceedings of the European conference on computer vision (ECCV) (pp. 101-117).</li>
+						<li>Dou, Y., Shu, K., Xia, C., Yu, P. S., & Sun, L. (2021, July). User preference-aware fake news detection. In Proceedings of the 44th International ACM SIGIR Conference on Research and Development in Information Retrieval (pp. 2051-2055).</li>
+						<li>Wang, Y., Ma, F., Jin, Z., Yuan, Y., Xun, G., Jha, K., ... & Gao, J. (2018, July). Eann: Event adversarial neural networks for multi-modal fake news detection. In Proceedings of the 24th acm sigkdd international conference on knowledge discovery & data mining (pp. 849-857).</li>
+						<li>Z. A. Estela, “Are you fake news,” https://github.com/N2ITN/are-you-fake-news, 2022, [Online; accessed 18-July-2022].</li> -->
+						<!-- <li></li> -->
+						<!-- <li>Hayawi, K., Mathew, S., Venugopal, N., Masud, M. M., & Ho, P. H. (2022). DeeProBot: a hybrid deep neural network model for social bot detection based on user profile data. Social Network Analysis and Mining, 12(1), 43.</li>
+						<li>Subrahmanian, V. S., Azaria, A., Durst, S., Kagan, V., Galstyan, A., Lerman, K., ... & Menczer, F. (2016). The DARPA Twitter bot challenge. Computer, 49(6), 38-46.</li>
+						<li>Abu-El-Rub, N., & Mueen, A. (2019, May). Botcamp: Bot-driven interactions in social campaigns. In The world wide web conference (pp. 2529-2535).</li>
+						<li>Kudugunta, S., & Ferrara, E. (2018). Deep neural networks for bot detection. Information Sciences, 467, 312-322.</li>
+						<li>Yang, K. C., Varol, O., Hui, P. M., & Menczer, F. (2020, April). Scalable and generalizable social bot detection through data selection. In Proceedings of the AAAI conference on artificial intelligence (Vol. 34, No. 01, pp. 1096-1103).</li> -->
+						<!-- <li></li>
+						<li></li> -->
+						<!-- <for trigger bots> -->
+						<!-- <li>U. Security and E. C. T. Report, “US Security and Exchange Commission Twitter Report,” https://www.sec.gov/Archives/edgar/data/141809
+							1/000156459014003474/twtr-10q_20140630.htm?_ga=1.106844928. 2072504916.1401902059, 2014, [Online; accessed 23-Feb-2023].</li>
+						<li>Shao, C., Ciampaglia, G. L., Varol, O., Yang, K. C., Flammini, A., & Menczer, F. (2018). The spread of low-credibility content by social bots. Nature communications, 9(1), 1-9.</li>	
+						<li>Schuchard, R. J., & Crooks, A. T. (2021). Insights into elections: An ensemble bot detection coverage framework applied to the 2018 US midterm elections. Plos one, 16(1), e0244309.</li>	
+						<li>Wright, J., & Anise, O. (2018). Don’t@ me: Hunting twitter bots at scale. Blackhat USA.</li>	
+						<li>Keller, T. R., & Klinger, U. (2019). Social bots in election campaigns: Theoretical, empirical, and methodological implications. Political Communication, 36(1), 171-189.</li>	 -->
+						<!-- bot detection with feature manipulation -->
+						<!-- <li>Cresci, S., Di Pietro, R., Petrocchi, M., Spognardi, A., & Tesconi, M. (2016). DNA-inspired online behavioral modeling and its application to spambot detection. IEEE Intelligent Systems, 31(5), 58-64.</li>
+						<li>Cresci, S., Di Pietro, R., Petrocchi, M., Spognardi, A., & Tesconi, M. (2017). Social fingerprinting: detection of spambot groups through DNA-inspired behavioral modeling. IEEE Transactions on Dependable and Secure Computing, 15(4), 561-576.</li>	
+						<li>Mbona, I., & Eloff, J. H. (2023). Classifying social media bots as malicious or benign using semi-supervised machine learning. Journal of Cybersecurity, 9(1), tyac015.</li>
+						<li>Sayyadiharikandeh, M., Varol, O., Yang, K. C., Flammini, A., & Menczer, F. (2020, October). Detection of novel social bots by ensembles of specialized classifiers. In Proceedings of the 29th ACM international conference on information & knowledge management (pp. 2725-2732).</li>	
+						<li>Van Der Walt, E., & Eloff, J. (2018). Using machine learning to detect fake identities: bots vs humans. IEEE access, 6, 6540-6549.</li>
+						<li>Rout, R. R., Lingam, G., & Somayajulu, D. V. (2020). Detection of malicious social bots using learning automata with url features in twitter network. IEEE Transactions on Computational Social Systems, 7(4), 1004-1018.</li>	
+						<li>Xu, T., Goossen, G., Cevahir, H. K., Khodeir, S., Jin, Y., Li, F., ... & Pearce, P. (2021). Deep entity classification: Abusive account detection for online social networks. In 30th {USENIX} Security Symposium ({USENIX} Security 21).</li>
+						<li>Cresci, S., Petrocchi, M., Spognardi, A., & Tognazzi, S. (2019, June). Better safe than sorry: an adversarial approach to improve social bot detection. In Proceedings of the 10th ACM Conference on Web Science (pp. 47-56).</li>	
+						<li>Cresci, S., Petrocchi, M., Spognardi, A., & Tognazzi, S. (2021). The coming age of adversarial social bot detection. First Monday.</li>
+						<li>Le, T., Tran-Thanh, L., & Lee, D. (2022, April). Socialbots on fire: Modeling adversarial behaviors of socialbots via multi-agent hierarchical reinforcement learning. In Proceedings of the ACM Web Conference 2022 (pp. 545-554).</li>
+						<li>Shao, H., Yao, S., Jing, A., Liu, S., Liu, D., Wang, T., ... & Abdelzaher, T. (2020, August). Misinformation detection and adversarial attack cost analysis in directional social networks. In 2020 29th International Conference on Computer Communications and Networks (ICCCN) (pp. 1-11). IEEE.</li> -->
+						<!-- <li></li>	
+						<li></li>	
+						<li></li>	
+						<li></li>	 -->
+					<!-- </ol> -->
+				<!-- </section>
+			</header>
+		</article> -->
+
+
+			    <footer class="footer">
+				    <div class="container text-center py-5">
+				        <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+			            <small class="copyright">Edited by <b>BotSSCL Team</b> </small>
+						<br>
+						<small class="copyright">Theme Credits: <a class="theme-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a></small>
+				        <!-- <ul class="social-list list-unstyled pt-4 mb-0">
+						    <li class="list-inline-item"><a href="#"><i class="fab fa-github fa-fw"></i></a></li> 
+				            <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
+				            <li class="list-inline-item"><a href="#"><i class="fab fa-slack fa-fw"></i></a></li>
+				            <li class="list-inline-item"><a href="#"><i class="fab fa-product-hunt fa-fw"></i></a></li>
+				            <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f fa-fw"></i></a></li>
+				            <li class="list-inline-item"><a href="#"><i class="fab fa-instagram fa-fw"></i></a></li>
+				        </ul>//social-list -->
+				    </div>
+			    </footer>
+		    </div> 
+	    </div>
+    </div><!--//docs-wrapper-->
+   
+       
+    <!-- Javascript -->          
+    <script src="assets/plugins/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+    
+    
+    <!-- Page Specific JS -->
+    <script src="assets/plugins/smoothscroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+    <script src="assets/js/highlight-custom.js"></script> 
+    <script src="assets/plugins/simplelightbox/simple-lightbox.min.js"></script>      
+    <script src="assets/plugins/gumshoe/gumshoe.polyfills.min.js"></script> 
+    <script src="assets/js/docs.js"></script> 
+
+</body>
+</html> 
+
